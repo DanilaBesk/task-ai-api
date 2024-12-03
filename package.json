@@ -4,15 +4,32 @@
   "main": "src/index.ts",
   "type": "module",
   "scripts": {
+    "start": "cross-env NODE_ENV=development tsx src/index.ts",
+    "start:prod": "npx prisma generate && npm run build && cross-env NODE_ENV=production node dist/src/index.js",
+    "dev": "cross-env NODE_ENV=development tsx watch src/index.ts",
+    "build": "cross-env NODE_ENV=production rimraf ./dist && tsc --project tsconfig.build.json && tsc-alias --project tsconfig.build.json",
     "migrate:create": "prisma migrate dev --create-only --name"
   },
   "author": "Danila Beskorovaev <danilbeskorovaev546@gmail.com>",
   "license": "ISC",
+  "description": "",
   "dependencies": {
-    "@prisma/client": "^6.0.1"
+    "@prisma/client": "^6.0.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.6",
+    "express": "^4.21.1",
+    "openai": "^4.74.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "prisma": "^6.0.1"
-  },
-  "description": ""
+    "@types/cookie-parser": "^1.4.8",
+    "@types/express": "^5.0.0",
+    "prisma": "^6.0.1",
+    "tsc-alias": "^1.8.10",
+    "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
 }
