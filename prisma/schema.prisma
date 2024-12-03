@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  client
+  admin
+}
+
+enum MessageRole {
+  system
+  assistent
+  user
+}
+
+enum TransactionType {
+  credit
+  debit
+}
+
+model User {
+  id           String   @id @default(uuid()) @db.Uuid
+  email        String   @unique @db.VarChar(256)
+  password     String   @db.VarChar(20)
+  role         UserRole @default(client)
+  credits      Int      @default(0)
+  refreshToken String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  chats Chat[]
+}
+
+model Chat {
+  id        String   @id @default(uuid()) @db.Uuid
+  model     String   @db.VarChar(256)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId   String    @db.Uuid
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  messages Message[]
+}
+
+model Message {
+  id        String      @id @default(uuid()) @db.Uuid
+  role      MessageRole
+  content   String
+  createdAt DateTime    @default(now())
+
+  chatId             String              @db.Uuid
+  chat               Chat                @relation(fields: [chatId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  messageTransaction MessageTransaction?
+}
+
+model MessageTransaction {
+  id              String          @id @default(uuid()) @db.Uuid
+  amountCredits   Int
+  transactionType TransactionType
+  createdAt       DateTime        @default(now())
+
+  messageId String  @unique @db.Uuid
+  message   Message @relation(fields: [messageId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+}
