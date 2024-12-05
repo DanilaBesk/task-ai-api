@@ -12,58 +12,60 @@ enum UserRole {
   admin
 }
 
-enum MessageRole {
-  system
-  assistent
-  user
+enum BalanceChangeType {
+  increase
+  reduce
+  set
 }
 
-enum TransactionType {
-  credit
-  debit
+enum BalanceChangeSourceType {
+  generation_text
+  admin_action
 }
 
 model User {
-  id           String   @id @default(uuid()) @db.Uuid
-  email        String   @unique @db.VarChar(256)
-  password     String   @db.VarChar(20)
-  role         UserRole @default(client)
-  credits      Int      @default(0)
-  refreshToken String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  chats Chat[]
-}
-
-model Chat {
   id        String   @id @default(uuid()) @db.Uuid
-  model     String   @db.VarChar(256)
+  email     String   @unique @db.VarChar(256)
+  password  String
+  role      UserRole @default(client)
+  credits   Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  userId   String    @db.Uuid
-  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  messages Message[]
+  refreshToken            RefreshToken?
+  creditTransfersSent     CreditTransfer[] @relation("sender")
+  creditTransfersReceived CreditTransfer[] @relation("receiver")
+  balanceChanges          BalanceChange[]
 }
 
-model Message {
-  id        String      @id @default(uuid()) @db.Uuid
-  role      MessageRole
-  content   String
-  createdAt DateTime    @default(now())
+model BalanceChange {
+  id         String                  @id @default(uuid()) @db.Uuid
+  count      Int
+  type       BalanceChangeType
+  reason     String?
+  sourceType BalanceChangeSourceType
+  createdAt  DateTime                @default(now())
+  userId     String                  @db.Uuid
 
-  chatId             String              @db.Uuid
-  chat               Chat                @relation(fields: [chatId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  messageTransaction MessageTransaction?
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  creditTransfers CreditTransfer?
 }
 
-model MessageTransaction {
-  id              String          @id @default(uuid()) @db.Uuid
-  amountCredits   Int
-  transactionType TransactionType
-  createdAt       DateTime        @default(now())
+model RefreshToken {
+  refreshToken String
+  userId       String @unique @db.Uuid
 
-  messageId String  @unique @db.Uuid
-  message   Message @relation(fields: [messageId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model CreditTransfer {
+  id              String   @id @default(uuid()) @db.Uuid
+  createdAt       DateTime @default(now())
+  senderId        String?  @db.Uuid
+  receiverId      String?  @db.Uuid
+  balanceChangeId String   @unique @db.Uuid
+
+  sender        User?         @relation(name: "sender", fields: [senderId], references: [id], onUpdate: Cascade, onDelete: SetNull)
+  receiver      User?         @relation(name: "receiver", fields: [receiverId], references: [id], onUpdate: Cascade, onDelete: SetNull)
+  balanceChange BalanceChange @relation(fields: [balanceChangeId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 }
