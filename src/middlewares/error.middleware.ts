@@ -1,7 +1,12 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from 'express';
 
-import { CONFIG } from "#config";
-import { ValidationError, ApiError } from "#/errors/api-error";
+import { REFRESH_COOKIE_OPTIONS } from '#/constants/auth.constants';
+import {
+  ApiError,
+  UnauthorizedError,
+  ValidationError
+} from '#/errors/api-error';
+import { CONFIG } from '#config';
 
 export function ErrorMiddleware(
   error: Error,
@@ -10,13 +15,13 @@ export function ErrorMiddleware(
   next: NextFunction
 ) {
   const defaultStatus = 500;
-  const defaultMessage = "Something went wrong. Please try again later.";
-  const defaultName = "InternalError";
+  const defaultMessage = 'Something went wrong. Please try again later.';
+  const defaultName = 'InternalError';
 
   let status = defaultStatus;
   const body: Record<string, unknown> = {
     name: defaultName,
-    message: defaultMessage,
+    message: defaultMessage
   };
 
   if (error instanceof ApiError) {
@@ -26,14 +31,16 @@ export function ErrorMiddleware(
 
     if (error instanceof ValidationError) {
       body.errors = error.errors;
+    } else if (error instanceof UnauthorizedError) {
+      res.clearCookie('refreshToken', { ...REFRESH_COOKIE_OPTIONS, maxAge: 0 });
     }
   }
 
-  if (CONFIG.NODE_ENV !== "production") {
+  if (CONFIG.NODE_ENV !== 'production') {
     if (error instanceof ApiError) {
-      console.log("Operational error: ", error);
+      console.log('Operational error: ', error);
     } else {
-      console.log("Unknown error: ", error);
+      console.log('Unknown error: ', error);
     }
   }
 

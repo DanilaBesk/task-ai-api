@@ -4,7 +4,7 @@ export class ApiError extends Error {
   constructor({
     status,
     message,
-    cause,
+    cause
   }: {
     status: number;
     message: string;
@@ -26,19 +26,59 @@ export class ValidationError extends BadRequestError {
   errors: unknown[];
 
   constructor({ errors, cause }: { errors: unknown[]; cause?: unknown }) {
-    super({ message: "Validation error occurred.", cause });
+    super({ message: 'Validation error occurred.', cause });
 
     this.errors = errors;
   }
 }
 
 export class UnauthorizedError extends ApiError {
-  constructor({ message }: { message: string }) {
-    super({ status: 401, message });
+  constructor() {
+    super({ status: 401, message: 'User is not authorized.' });
   }
 }
+
+export class InsufficientCreditsError extends ApiError {
+  constructor() {
+    super({
+      status: 402,
+      message: 'Insufficient credits. Please top up your balance.'
+    });
+  }
+}
+
+export class PermissionDeniedError extends ApiError {
+  constructor({ message }: { message: string }) {
+    super({ status: 403, message });
+  }
+}
+
 export class NotFoundError extends ApiError {
   constructor({ message }: { message: string }) {
     super({ status: 404, message });
+  }
+}
+
+export class EmailAlreadyTakenError extends ApiError {
+  constructor() {
+    super({
+      status: 409,
+      message: 'This email address is taken. Please try another.'
+    });
+  }
+}
+
+export class InvalidCredentialsError extends ApiError {
+  constructor() {
+    super({
+      status: 401,
+      message: 'Email or password incorrect.'
+    });
+  }
+}
+
+export class TokenExpiredError extends ApiError {
+  constructor() {
+    super({ status: 419, message: 'Token has expired.' });
   }
 }
