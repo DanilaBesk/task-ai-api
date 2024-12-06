@@ -11,6 +11,7 @@ const portSchema = z.preprocess(
 export const CONFIG = z
   .object({
     APP_PORT: portSchema,
+    APP_HOST: z.string(),
     DATABASE_URL: z.string().url(),
     OPENAI_API_KEY: z.string(),
     JWT_ACCESS_SECRET: z.string(),

@@ -36,7 +36,7 @@ export const start = async (app: Application) => {
 
     await createAdmin();
 
-    app.listen(CONFIG.APP_PORT, 'localhost', () => {
+    app.listen(CONFIG.APP_PORT, CONFIG.APP_HOST, () => {
       console.info(`Server start on PORT: ${CONFIG.APP_PORT}`);
     });
   } catch (error) {
