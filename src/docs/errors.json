@@ -1,0 +1,141 @@
+{
+  "errors": {
+    "BadRequestError": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "BadRequestError",
+          "const": "BadRequestError"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "EmailAlreadyTakenError": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "EmailAlreadyTakenError",
+          "const": "EmailAlreadyTakenError"
+        },
+        "message": {
+          "type": "string",
+          "example": "This email address is taken. Please try another.",
+          "const": "This email address is taken. Please try another."
+        }
+      }
+    },
+    "InsufficientCreditsError": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "InsufficientCreditsError",
+          "const": "InsufficientCreditsError"
+        },
+        "message": {
+          "type": "string",
+          "example": "Insufficient credits. Please top up your balance.",
+          "const": "Insufficient credits. Please top up your balance."
+        }
+      }
+    },
+    "InvalidCredentialsError": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "InvalidCredentialsError",
+          "const": "InvalidCredentialsError"
+        },
+        "message": {
+          "type": "string",
+          "example": "Email or password incorrect.",
+          "const": "Email or password incorrect."
+        }
+      }
+    },
+    "UnauthorizedError": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "UnauthorizedError",
+          "const": "UnauthorizedError"
+        },
+        "message": {
+          "type": "string",
+          "example": "User is not authorized.",
+          "const": "User is not authorized."
+        }
+      }
+    },
+    "PermissionDeniedError": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "PermissionDeniedError",
+          "const": "PermissionDeniedError"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "NotFoundError": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "NotFoundError",
+          "const": "NotFoundError"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "ValidationError": {
+      "description": "Zod validation errors",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "const": "ValidationError"
+        },
+        "message": {
+          "type": "string",
+          "const": "Validation error occurred."
+        },
+        "errors": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string"
+            },
+            "code": {
+              "type": "number"
+            },
+            "path": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "common": {
+    "schemas": {
+      "CreatedAt": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Дата и время создания ресурса в формате ISO 8601."
+      },
+      "UpdatedAt": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Дата и время последнего обновления ресурса в формате ISO 8601."
+      }
+    },
+    "responses": {
+      "ResponseOK": {
+        "type": "string",
+        "example": "OK",
+        "const": "OK"
+      }
+    }
+  }
+}

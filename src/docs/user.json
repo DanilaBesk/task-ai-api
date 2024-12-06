@@ -1,0 +1,69 @@
+{
+  "user": {
+    "schemas": {
+      "UserId": {
+        "type": "string",
+        "example": "6eca6a2a-a936-465a..."
+      },
+      "UserRole": {
+        "type": "string",
+        "enum": ["admin", "client"],
+        "example": "admin"
+      },
+      "Email": {
+        "type": "string",
+        "format": "email",
+        "example": "user@example.com"
+      },
+      "Password": {
+        "type": "string",
+        "example": "password123"
+      }
+    },
+    "requests": {
+      "AdjustCredits": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "$ref": "#/components/user/schemas/UserId"
+          },
+          "count": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Сумма для обновления кредитов.",
+            "example": 50
+          },
+          "operation": {
+            "type": "string",
+            "enum": ["reduce", "increase", "set"],
+            "description": "Тип операции для обновления.",
+            "example": "increase"
+          }
+        }
+      }
+    },
+    "responses": {
+      "UserInfo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/user/schemas/UserId"
+          },
+          "role": {
+            "$ref": "#/components/user/schemas/UserRole"
+          },
+          "credits": {
+            "type": "number",
+            "example": 100
+          },
+          "email": {
+            "$ref": "#/components/user/schemas/Email"
+          },
+          "createdAt": {
+            "$ref": "#/components/common/schemas/CreatedAt"
+          }
+        }
+      }
+    }
+  }
+}

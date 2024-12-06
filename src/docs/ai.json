@@ -1,0 +1,29 @@
+{
+  "ai": {
+    "schemas": {
+      "Prompt": {
+        "type": "string",
+        "example": "Сколько мандаринок скушать на новый год?"
+      }
+    },
+    "requests": {
+      "Generate": {
+        "type": "object",
+        "properties": {
+          "prompt": {
+            "$ref": "#/components/ai/schemas/Prompt"
+          },
+          "model": {
+            "$ref": "#/components/ai/schemas/AIModel"
+          }
+        }
+      }
+    },
+    "responses": {
+      "ChunkTextResponse": {
+        "type": "string",
+        "example": "data: {\"finish_reason\":\"null\",\"content\":\"ев\"}"
+      }
+    }
+  }
+}
