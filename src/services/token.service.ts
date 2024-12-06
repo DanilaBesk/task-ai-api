@@ -7,11 +7,7 @@ import {
   JWT_SIGNING_ALGORITHM,
   REFRESH_TOKEN_EXPIRES_IN
 } from '#/constants/auth.constants';
-import {
-  BadRequestError,
-  TokenExpiredError,
-  UnauthorizedError
-} from '#/errors/api-error';
+import { TokenExpiredError, UnauthorizedError } from '#/errors/api-error';
 import { prisma } from '#/providers';
 import {
   TCreateRefreshToken,
@@ -54,7 +50,7 @@ export class TokenService {
     const result = await schema.safeParseAsync(payload);
 
     if (!result.success) {
-      throw new BadRequestError({ message: 'Invalid token payload error.' });
+      throw new UnauthorizedError();
     }
 
     return result.data;
