@@ -32,11 +32,12 @@ const createAdmin = async () => {
 
 export const start = async (app: Application) => {
   try {
+    console.log(CONFIG.DATABASE_URL);
     await prisma.$connect();
 
     await createAdmin();
 
-    app.listen(CONFIG.APP_PORT, CONFIG.APP_HOST, () => {
+    app.listen(CONFIG.APP_PORT, () => {
       console.info(`Server start on PORT: ${CONFIG.APP_PORT}`);
     });
   } catch (error) {

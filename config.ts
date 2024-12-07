@@ -11,7 +11,6 @@ const portSchema = z.preprocess(
 export const CONFIG = z
   .object({
     APP_PORT: portSchema,
-    APP_HOST: z.string(),
 
     APP_BASE_ADMIN_EMAIL: z.string().email(),
     APP_BASE_ADMIN_PASSWORD: z.string(),
