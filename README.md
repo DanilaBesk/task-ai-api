@@ -35,8 +35,15 @@ API предназначен для администраторов и клиен
 
 ### 1. Клонирование репозитория
 
+Склонируйте репозиторий:
+
 ```bash
 git clone https://github.com/DanilaBesk/task-ai-api.git
+```
+
+И перейдите в каталог `task-ai-api`:
+
+```bash
 cd task-ai-api
 ```
 
@@ -54,20 +61,20 @@ npm install
 ```txt
 APP_PORT=5000
 
-// Базовый администратор для приложения
+# Базовый администратор для приложения
 APP_BASE_ADMIN_EMAIL='admin@example.com'
 APP_BASE_ADMIN_PASSWORD='password123'
 
-APP_JWT_ACCESS_SECRET=''
-APP_JWT_REFRESH_SECRET=''
+APP_JWT_ACCESS_SECRET='access_secret'
+APP_JWT_REFRESH_SECRET='refresh_secret'
 
 OPENAI_API_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3YjEyMWFlLWUwZDYtNDliMi1iNjlmLTBkNzE3ODkzYjgzOSIsImlzRGV2ZWxvcGVyIjp0cnVlLCJpYXQiOjE3Mjc2OTA0MTgsImV4cCI6MjA0MzI2NjQxOH0.0_rVXKNuSCBP4MO6hBnTXAE0kE1h52xpwDSGPaR4vGM'
 
+POSTGRES_HOST='postgres'
 POSTGRES_PORT=5432
 POSTGRES_USER='user'
 POSTGRES_PASSWORD='password123'
 POSTGRES_DB='ai-actions'
-POSTGRES_HOST='postgres'
 
 DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
 ```
@@ -84,6 +91,8 @@ docker compose up --build
 
 После выполнения этой команды проект будет доступен на порту, указанном в .env файле (APP_PORT), например `http://localhost:5000`
 
+Примечание: если приложение не запускается и вы видите ошибку `exec /app/docker-wait-postgres.sh: no such file or directory`, то в visual studio code измените в файле `docker-wait-postgres.sh` опцию `CRLF` на `LF`. Далее снова запустите контейнеры с помощью команды `docker compose up --build`.
+
 ## Документация API
 
-Документация OpenAPI/Swagger доступна после запуска проекта по маршруту: '/api-docs'
+Документация OpenAPI/Swagger доступна после запуска проекта по маршруту: `/api-docs`.
