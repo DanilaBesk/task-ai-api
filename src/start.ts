@@ -32,7 +32,6 @@ const createAdmin = async () => {
 
 export const start = async (app: Application) => {
   try {
-    console.log(CONFIG.DATABASE_URL);
     await prisma.$connect();
 
     await createAdmin();
