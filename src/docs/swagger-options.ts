@@ -39,10 +39,11 @@ export const swaggerOptions = {
       ai: {
         ...ai,
         schemas: {
+          ...ai.schemas,
           AIModel: {
             type: 'string',
             enum: Object.keys(AIModels),
-            example: Object.entries(AIModels)[0][0]
+            example: Object.keys(AIModels)[0]
           }
         }
       },

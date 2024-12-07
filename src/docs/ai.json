@@ -21,8 +21,24 @@
     },
     "responses": {
       "ChunkTextResponse": {
-        "type": "string",
-        "example": "data: {\"finish_reason\":\"null\",\"content\":\"ев\"}"
+        "oneOf": [
+          {
+            "type": "string",
+            "example": "data: {\"finish_reason\":\"null\",\"content\":\"text\"}"
+          },
+          {
+            "type": "string",
+            "example": "data: {\"finish_reason\":\"limit\",\"content\":\"\"}"
+          },
+          {
+            "type": "string",
+            "example": "data: {\"finish_reason\":\"error\",\"content\":\"\"}"
+          },
+          {
+            "type": "string",
+            "example": "data: {\"finish_reason\":\"stop\",\"content\":\"\"}"
+          }
+        ]
       }
     }
   }
