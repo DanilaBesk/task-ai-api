@@ -59,7 +59,6 @@ export class AIAction {
 
       for await (const chunk of stream) {
         if (res.writableEnded) break;
-        console.log(JSON.stringify(chunk, null, 2));
         if (chunk.content) {
           assistantMessage.content += chunk.content;
 
@@ -85,7 +84,6 @@ export class AIAction {
         res.write(this.createChunkText({ finish_reason: 'stop' }));
       }
     } catch (error) {
-      console.error('Error while streaming:', error);
       if (!res.writableEnded) {
         res.write(this.createChunkText({ finish_reason: 'error' }));
       }
