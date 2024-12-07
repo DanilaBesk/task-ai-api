@@ -10,6 +10,10 @@ import {
 import { TokenExpiredError, UnauthorizedError } from '#/errors/api-error';
 import { prisma } from '#/providers';
 import {
+  AccessTokenPayloadSchema,
+  RefreshTokenPayloadSchema
+} from '#/schemas/token.schemas';
+import {
   TCreateRefreshToken,
   TDeleteRefreshToken,
   TFindRefreshToken,
@@ -20,10 +24,6 @@ import {
   TVerifyAccessToken,
   TVerifyRefreshToken
 } from '#/types/token.types';
-import {
-  AccessTokenPayloadSchema,
-  RefreshTokenPayloadSchema
-} from '#/schemas/token.schemas';
 
 export class TokenService {
   private static jwtVerify(token: string, secret: string) {
@@ -78,7 +78,7 @@ export class TokenService {
       role
     };
 
-    return jwt.sign(payload, CONFIG.JWT_ACCESS_SECRET, {
+    return jwt.sign(payload, CONFIG.APP_JWT_ACCESS_SECRET, {
       subject: userId,
       algorithm: JWT_SIGNING_ALGORITHM,
       expiresIn: ACCESS_TOKEN_EXPIRES_IN
@@ -86,7 +86,7 @@ export class TokenService {
   }
 
   static async makeRefreshToken({ userId }: TMakeRefreshToken) {
-    return jwt.sign({}, CONFIG.JWT_REFRESH_SECRET, {
+    return jwt.sign({}, CONFIG.APP_JWT_REFRESH_SECRET, {
       subject: userId,
       algorithm: JWT_SIGNING_ALGORITHM,
       expiresIn: REFRESH_TOKEN_EXPIRES_IN
@@ -96,7 +96,7 @@ export class TokenService {
   static async verifyRefreshToken({ refreshToken }: TVerifyRefreshToken) {
     const payload = await this.jwtVerify(
       refreshToken,
-      CONFIG.JWT_REFRESH_SECRET
+      CONFIG.APP_JWT_REFRESH_SECRET
     );
 
     return await this.validateTokenPayload({
@@ -106,7 +106,10 @@ export class TokenService {
   }
 
   static async verifyAccessToken({ accessToken }: TVerifyAccessToken) {
-    const payload = await this.jwtVerify(accessToken, CONFIG.JWT_ACCESS_SECRET);
+    const payload = await this.jwtVerify(
+      accessToken,
+      CONFIG.APP_JWT_ACCESS_SECRET
+    );
 
     return await this.validateTokenPayload({
       payload,

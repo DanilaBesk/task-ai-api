@@ -4,7 +4,7 @@ import { prisma } from '#/providers';
 import { AuthService } from '#/services';
 
 const createAdmin = async () => {
-  const email = CONFIG.BASE_ADMIN_EMAIL;
+  const email = CONFIG.APP_BASE_ADMIN_EMAIL;
 
   const admin = await prisma.user.findUnique({
     where: { email }
@@ -12,7 +12,7 @@ const createAdmin = async () => {
 
   if (!admin) {
     const hashPassword = await AuthService.makeHashPassword({
-      password: CONFIG.BASE_ADMIN_PASSWORD
+      password: CONFIG.APP_BASE_ADMIN_PASSWORD
     });
     await prisma.user.create({
       data: {

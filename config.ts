@@ -1,5 +1,5 @@
-import { z } from 'zod';
 import { config } from 'dotenv';
+import { z } from 'zod';
 
 config();
 
@@ -12,12 +12,23 @@ export const CONFIG = z
   .object({
     APP_PORT: portSchema,
     APP_HOST: z.string(),
-    DATABASE_URL: z.string().url(),
+
+    APP_BASE_ADMIN_EMAIL: z.string().email(),
+    APP_BASE_ADMIN_PASSWORD: z.string(),
+
+    APP_JWT_ACCESS_SECRET: z.string(),
+    APP_JWT_REFRESH_SECRET: z.string(),
+
     OPENAI_API_KEY: z.string(),
-    JWT_ACCESS_SECRET: z.string(),
-    JWT_REFRESH_SECRET: z.string(),
-    BASE_ADMIN_EMAIL: z.string().email(),
-    BASE_ADMIN_PASSWORD: z.string(),
+
+    POSTGRES_HOST: z.string(),
+    POSTGRES_PORT: portSchema,
+    POSTGRES_USER: z.string(),
+    POSTGRES_PASSWORD: z.string(),
+    POSTGRES_DB: z.string(),
+
+    DATABASE_URL: z.string().url(),
+
     NODE_ENV: z.enum(['development', 'production', 'test'])
   })
   .parse(process.env);
