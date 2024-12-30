@@ -47,10 +47,12 @@ git clone https://github.com/DanilaBesk/task-ai-api.git
 cd task-ai-api
 ```
 
-### 2. Установка зависимостей
+### 2. Установка зависимостей (опционально)
+
+Можете локально установить зависимости, чтобы работать с проектом. Для запуска контейнеров необязательно.
 
 ```bash
-npm install
+npm ci
 
 ```
 
@@ -68,7 +70,9 @@ APP_BASE_ADMIN_PASSWORD='password123'
 APP_JWT_ACCESS_SECRET='access_secret'
 APP_JWT_REFRESH_SECRET='refresh_secret'
 
-OPENAI_API_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc3YjEyMWFlLWUwZDYtNDliMi1iNjlmLTBkNzE3ODkzYjgzOSIsImlzRGV2ZWxvcGVyIjp0cnVlLCJpYXQiOjE3Mjc2OTA0MTgsImV4cCI6MjA0MzI2NjQxOH0.0_rVXKNuSCBP4MO6hBnTXAE0kE1h52xpwDSGPaR4vGM'
+CLIENT_ORIGIN='http://localhost:5173'
+
+OPENAI_API_KEY=''
 
 POSTGRES_HOST='postgres'
 POSTGRES_PORT=5432
