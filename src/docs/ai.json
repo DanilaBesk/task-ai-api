@@ -3,7 +3,13 @@
     "schemas": {
       "Prompt": {
         "type": "string",
+        "maxLength": {
+          "$ref": "#/dinamicComponents/ai/variables/maxPromptLength"
+        },
         "example": "Сколько мандаринок скушать на новый год?"
+      },
+      "AIModel": {
+        "$ref": "#/dinamicComponents/ai/schemas/AIModel"
       }
     },
     "requests": {

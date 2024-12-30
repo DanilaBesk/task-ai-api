@@ -5,6 +5,7 @@ import { auth } from '#/docs/auth.json';
 import { ai } from '#/docs/ai.json';
 import { errors } from '#/docs/errors.json';
 import { AIModels } from '#/ai-models/openai';
+import { MAX_PROMPT_LENGTH } from '#/constants/ai-action.constants';
 
 export const swaggerOptions = {
   definition: {
@@ -36,19 +37,23 @@ export const swaggerOptions = {
       },
       user,
       auth,
+      ai,
+      errors,
+      common
+    },
+    dinamicComponents: {
       ai: {
-        ...ai,
+        variables: {
+          maxPromptLength: MAX_PROMPT_LENGTH
+        },
         schemas: {
-          ...ai.schemas,
           AIModel: {
             type: 'string',
             enum: Object.keys(AIModels),
             example: Object.keys(AIModels)[0]
           }
         }
-      },
-      errors,
-      common
+      }
     }
   },
   apis: ['./src/routes/*.ts']
