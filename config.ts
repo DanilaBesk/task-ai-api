@@ -18,6 +18,8 @@ export const CONFIG = z
     APP_JWT_ACCESS_SECRET: z.string(),
     APP_JWT_REFRESH_SECRET: z.string(),
 
+    CLIENT_ORIGIN: z.string(),
+
     OPENAI_API_KEY: z.string(),
 
     POSTGRES_HOST: z.string(),
