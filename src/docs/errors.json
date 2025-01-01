@@ -68,8 +68,7 @@
         },
         "message": {
           "type": "string",
-          "example": "User is not authorized.",
-          "const": "User is not authorized."
+          "example": "User is not authorized."
         }
       }
     },

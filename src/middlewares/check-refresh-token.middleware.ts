@@ -1,34 +1,35 @@
 import { NextFunction, Request, Response } from 'express';
-import { AuthorizationHeaderSchema } from '#/schemas/auth.schemas';
+import { RefreshTokenCookieSchema } from '#/schemas/auth.schemas';
 import { TokenService } from '#/services';
-import { TAccessTokenPayload } from '#/types/token.types';
+import { TRefreshTokenPayload } from '#/types/token.types';
 import { validateRequestData } from '#/utils/validate-request-data';
 import { UnauthorizedError, ValidationError } from '#/errors/api-error';
 
 declare global {
   namespace Express {
     interface Request {
-      accessTokenPayload?: TAccessTokenPayload;
+      refreshTokenPayload?: TRefreshTokenPayload;
+      refreshToken?: string;
     }
   }
 }
 
-export async function CheckAccessTokenMiddleware(
+export async function CheckRefreshTokenMiddleware(
   req: Request,
   _: Response,
   next: NextFunction
 ) {
   try {
     const {
-      headers: { authorization: accessToken }
+      cookies: { refreshToken }
     } = await validateRequestData({
       req,
-      schema: AuthorizationHeaderSchema
+      schema: RefreshTokenCookieSchema
     });
 
-    const payload = await TokenService.verifyAccessToken({ accessToken });
+    const payload = await TokenService.verifyRefreshToken({ refreshToken });
 
-    req.accessTokenPayload = payload;
+    req.refreshTokenPayload = payload;
   } catch (error) {
     if (error instanceof ValidationError) {
       next(new UnauthorizedError({ message: error.message }));

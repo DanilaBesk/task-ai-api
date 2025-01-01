@@ -1,11 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 
 import { REFRESH_COOKIE_OPTIONS } from '#/constants/auth.constants';
-import {
-  LoginSchema,
-  RefreshTokensSchema,
-  RegistrationSchema
-} from '#/schemas/auth.schemas';
+import { LoginSchema, RegistrationSchema } from '#/schemas/auth.schemas';
 import { AuthService } from '#/services';
 import { validateRequestData } from '#/utils/validate-request-data';
 
@@ -64,12 +60,12 @@ export class AuthController {
 
   static async refreshTokens(req: Request, res: Response, next: NextFunction) {
     try {
-      const {
-        cookies: { refreshToken }
-      } = await validateRequestData({ schema: RefreshTokensSchema, req });
+      const refreshToken = req.refreshToken!;
+      const { sub: userId } = req.refreshTokenPayload!;
 
       const { accessToken, refreshToken: newRefreshToken } =
         await AuthService.refreshTokens({
+          userId,
           refreshToken
         });
 

@@ -50,7 +50,7 @@ export class TokenService {
     const result = await schema.safeParseAsync(payload);
 
     if (!result.success) {
-      throw new UnauthorizedError();
+      throw new UnauthorizedError({ message: result.error.message });
     }
 
     return result.data;

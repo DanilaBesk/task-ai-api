@@ -28,9 +28,9 @@ export const LoginSchema = z.object({
     .strict()
 });
 
-export const RefreshTokensSchema = z.object({
+export const RefreshTokenCookieSchema = z.object({
   cookies: z.object({
-    refreshToken: z.string()
+    refreshToken: z.string({ message: 'Invalid refresh token.' })
   })
 });
 

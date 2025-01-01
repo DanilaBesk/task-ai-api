@@ -33,8 +33,10 @@ export class ValidationError extends BadRequestError {
 }
 
 export class UnauthorizedError extends ApiError {
-  constructor() {
-    super({ status: 401, message: 'User is not authorized.' });
+  constructor(params?: { message?: string }) {
+    const message = params?.message ?? 'User is not authorized.';
+
+    super({ status: 401, message });
   }
 }
 

@@ -129,11 +129,7 @@ export class AuthService {
     await TokenService.deleteRefreshToken({ userId });
   }
 
-  static async refreshTokens({ refreshToken }: TRefreshTokens) {
-    const { sub: userId } = await TokenService.verifyRefreshToken({
-      refreshToken
-    });
-
+  static async refreshTokens({ userId, refreshToken }: TRefreshTokens) {
     const [user, tokenData] = await Promise.all([
       UserService.findUserById({ userId }),
       TokenService.findRefreshToken({ userId })

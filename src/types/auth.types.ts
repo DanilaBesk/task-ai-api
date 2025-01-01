@@ -22,5 +22,6 @@ export type TLogout = {
 };
 
 export type TRefreshTokens = {
+  userId: string;
   refreshToken: string;
 };

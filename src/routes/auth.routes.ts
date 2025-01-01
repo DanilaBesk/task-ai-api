@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { AuthController } from '#/controllers';
 import { CheckAccessTokenMiddleware } from '#/middlewares';
+import { CheckRefreshTokenMiddleware } from '#/middlewares/check-refresh-token.middleware';
 
 const authRouter = Router();
 
@@ -123,12 +124,6 @@ authRouter.post('/logout', CheckAccessTokenMiddleware, AuthController.logout);
  *               $ref: '#/components/auth/responses/AuthResponse'
  *         headers:
  *           $ref: '#/components/auth/responses/RefreshTokenCookieHeader'
- *       400:
- *         description: ValidationError
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/errors/ValidationError'
  *       401:
  *         description: UnauthorizedError
  *         content:
@@ -136,6 +131,10 @@ authRouter.post('/logout', CheckAccessTokenMiddleware, AuthController.logout);
  *             schema:
  *               $ref: '#/components/errors/UnauthorizedError'
  */
-authRouter.post('/refresh-tokens', AuthController.refreshTokens);
+authRouter.post(
+  '/refresh-tokens',
+  CheckRefreshTokenMiddleware,
+  AuthController.refreshTokens
+);
 
 export { authRouter };

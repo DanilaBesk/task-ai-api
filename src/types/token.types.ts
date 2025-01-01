@@ -1,9 +1,13 @@
 import { z } from 'zod';
 
-import { AccessTokenPayloadSchema } from '#/schemas/token.schemas';
+import {
+  AccessTokenPayloadSchema,
+  RefreshTokenPayloadSchema
+} from '#/schemas/token.schemas';
 import { UserRole } from '@prisma/client';
 
 export type TAccessTokenPayload = z.infer<typeof AccessTokenPayloadSchema>;
+export type TRefreshTokenPayload = z.infer<typeof RefreshTokenPayloadSchema>;
 
 export type TValidateTokenPayload<T extends z.AnyZodObject> = {
   payload: unknown;
