@@ -3,12 +3,14 @@ import { z } from 'zod';
 import { EMAIL, PASSWORD } from '#/schemas/common.schemas';
 
 export const AUTHORIZATION_HEADER = z
-  .string()
-  .refine((header) => {
+  .custom((header) => {
+    if (typeof header !== 'string') {
+      return false;
+    }
     const [scheme, token] = header.split(' ');
     return scheme === 'Bearer' && !!token;
   }, 'Invalid authorization header. Expected format: Bearer <token>')
-  .transform((header) => header.split(' ')[1]);
+  .transform((header) => (header as string).split(' ')[1]);
 
 export const RegistrationSchema = z.object({
   body: z
