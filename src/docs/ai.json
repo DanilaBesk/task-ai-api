@@ -8,8 +8,11 @@
         },
         "example": "Сколько мандаринок скушать на новый год?"
       },
-      "AIModel": {
-        "$ref": "#/dinamicComponents/ai/schemas/AIModel"
+      "AIModelNames": {
+        "$ref": "#/dinamicComponents/ai/schemas/AIModelNames"
+      },
+      "AIModelsInfo": {
+        "$ref": "#/dinamicComponents/ai/schemas/AIModelsInfo"
       }
     },
     "requests": {
@@ -20,7 +23,7 @@
             "$ref": "#/components/ai/schemas/Prompt"
           },
           "model": {
-            "$ref": "#/components/ai/schemas/AIModel"
+            "$ref": "#/components/ai/schemas/AIModelNames"
           }
         }
       }
@@ -45,6 +48,14 @@
             "example": "data: {\"finish_reason\":\"stop\",\"content\":\"\"}"
           }
         ]
+      },
+      "AIModelsInfoResponse": {
+        "type": "object",
+        "properties": {
+          "models": {
+            "$ref": "#/components/ai/schemas/AIModelsInfo"
+          }
+        }
       }
     }
   }

@@ -57,4 +57,20 @@ aiActionRouter.post(
   AIActionController.generateText
 );
 
+/**
+ * @swagger
+ * /ai/models:
+ *   get:
+ *     summary: Информация о доступных моделях и их характеристиках
+ *     tags: [AI]
+ *     responses:
+ *       200:
+ *         description: Информация о моделях успешно извлечена
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/ai/responses/AIModelsInfoResponse'
+ */
+aiActionRouter.get('/models', AIActionController.getAIModelsInfo);
+
 export { aiActionRouter };

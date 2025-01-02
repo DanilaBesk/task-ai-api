@@ -11,7 +11,7 @@ import {
   TMessage
 } from '#/types/ai-action.types';
 
-export class AIAction {
+export class AIActionService {
   private static createChunkText(chunk: TCreateChankText) {
     return `data: ${JSON.stringify(chunk)}\n\n`;
   }
@@ -109,5 +109,11 @@ export class AIAction {
         })
       ]);
     }
+  }
+  static getAIModelsInfo() {
+    return Object.entries(AIModels).map(([_, model]) => ({
+      name: model.name,
+      creditsPer100Tokens: model.creditsPer100Tokens
+    }));
   }
 }

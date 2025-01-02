@@ -15,7 +15,7 @@ export class AIModel<T extends string> {
   public name: T;
 
   private model: TOpenAIModel;
-  private creditsPer100Tokens: number;
+  public creditsPer100Tokens: number;
   private chatParams: TOpenAIChatParams;
   private systemMessage?: string;
   private beforeGeneration?({ messages, stream }: TBeforeGeneration): void;

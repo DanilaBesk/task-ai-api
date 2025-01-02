@@ -6,6 +6,7 @@ import { ai } from '#/docs/ai.json';
 import { errors } from '#/docs/errors.json';
 import { AIModels } from '#/ai-models/openai';
 import { MAX_PROMPT_LENGTH } from '#/constants/ai-action.constants';
+import { AIActionService } from '#/services';
 
 export const swaggerOptions = {
   definition: {
@@ -47,10 +48,25 @@ export const swaggerOptions = {
           maxPromptLength: MAX_PROMPT_LENGTH
         },
         schemas: {
-          AIModel: {
+          AIModelNames: {
             type: 'string',
             enum: Object.keys(AIModels),
             example: Object.keys(AIModels)[0]
+          },
+          AIModelsInfo: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                name: {
+                  $ref: '#/dinamicComponents/ai/schemas/AIModelNames'
+                },
+                creditsPer100Tokens: {
+                  type: 'number'
+                }
+              }
+            },
+            example: AIActionService.getAIModelsInfo()
           }
         }
       }
