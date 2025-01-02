@@ -29,6 +29,7 @@ export async function CheckRefreshTokenMiddleware(
 
     const payload = await TokenService.verifyRefreshToken({ refreshToken });
 
+    req.refreshToken = refreshToken;
     req.refreshTokenPayload = payload;
   } catch (error) {
     if (error instanceof ValidationError) {
