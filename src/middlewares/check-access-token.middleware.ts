@@ -31,7 +31,7 @@ export async function CheckAccessTokenMiddleware(
     req.accessTokenPayload = payload;
   } catch (error) {
     if (error instanceof ValidationError) {
-      next(new UnauthorizedError({ message: error.message }));
+      next(new UnauthorizedError({ message: error.errors[0].message }));
     }
     next(error);
   }

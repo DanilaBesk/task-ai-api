@@ -1,5 +1,5 @@
 export class ApiError extends Error {
-  status: number;
+  public status;
 
   constructor({
     status,
@@ -23,9 +23,19 @@ export class BadRequestError extends ApiError {
 }
 
 export class ValidationError extends BadRequestError {
-  errors: unknown[];
+  public errors;
 
-  constructor({ errors, cause }: { errors: unknown[]; cause?: unknown }) {
+  constructor({
+    errors,
+    cause
+  }: {
+    errors: {
+      code: string;
+      message: string;
+      path: (string | number)[];
+    }[];
+    cause?: unknown;
+  }) {
     super({ message: 'Validation error occurred.', cause });
 
     this.errors = errors;
