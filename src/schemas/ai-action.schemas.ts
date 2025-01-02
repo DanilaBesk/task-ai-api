@@ -9,8 +9,10 @@ export const AI_MODEL = z.enum(
 const PROMPT = z.string().max(MAX_PROMPT_LENGTH);
 
 export const GenerateText = z.object({
-  body: z.object({
-    model: AI_MODEL,
-    prompt: PROMPT
-  })
+  body: z
+    .object({
+      model: AI_MODEL,
+      prompt: PROMPT
+    })
+    .strict()
 });
