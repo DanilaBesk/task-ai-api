@@ -12,7 +12,8 @@ export const app = express();
 
 app.use(
   cors({
-    origin: CONFIG.CLIENT_ORIGIN
+    origin: CONFIG.CLIENT_ORIGIN,
+    credentials: true
   })
 );
 app.use(express.json());
